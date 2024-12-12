@@ -4,7 +4,7 @@ def call(String appName, String imageName) {
         oc project ${env.OPENSHIFT_PROJECT}
         
         # Create the deployment
-        oc create deployment ${appName} --image=${imageName} 
+        oc set image deployment/${appName} ${appName}=${imageName}
 
         # Start the service for the deployment
         oc expose deployment/${appName} --port=80
