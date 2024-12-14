@@ -5,7 +5,7 @@ def call(String namespace, String dockerImage, String k8sCredentials, String min
 
         sh """
             ${kubectlCommand} apply -f myapp.yaml
-            kubectl get deployments -n ${namespace}
+            ${kubectlCommand} get deployments -n ${namespace}
             ${kubectlCommand} get services -n ${namespace}
             
         """
