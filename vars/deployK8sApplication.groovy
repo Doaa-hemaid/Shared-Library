@@ -7,7 +7,16 @@ def call(String namespace, String dockerImage, String k8sCredentials, String min
             ${kubectlCommand} apply -f myapp.yaml
             ${kubectlCommand} get deployments -n ${namespace}
             ${kubectlCommand} get services -n ${namespace}
-            
+            echo "Verifying service availability..."
+            def serviceOutput = sh(script: """
+                ${kubectlCommand} --namespace=${namespace} get svc my-app -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'
+            """, returnStdout: true).trim()
+
+            if (serviceOutput) {
+                echo "Service is available at LoadBalancer IP: ${serviceOutput}"
+            } else {
+                error("Service LoadBalancer IP not assigned. Please verify the service configuration.")
+            }
         """
     }
 }
