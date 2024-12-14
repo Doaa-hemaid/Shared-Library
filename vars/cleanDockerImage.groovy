@@ -1,6 +1,6 @@
-def cleanDockerImage(String dockerImage) {
+def call(String imageName) {
     sh """
-            docker rmi ${dockerImage} || true
+       docker rmi ${imageName} || true
       """
 
 }
