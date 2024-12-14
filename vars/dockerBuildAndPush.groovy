@@ -1,4 +1,4 @@
-def call(String imageName, String credentialsId = 'docker-hub-log') {
+def call(String imageName, String credentialsId ) {
     withCredentials([usernamePassword(credentialsId: credentialsId, usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
         sh """
             docker build -t ${imageName} .
